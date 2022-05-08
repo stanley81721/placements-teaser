@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- MetisMenu CSS -->
+    <link th:href="@{/vendor/metisMenu/metisMenu.min.css}" href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    <link th:href="@{/css/sb-admin-2.css}" href="../css/sb-admin-2.css" rel="stylesheet"/>
+
+    <!-- Custom Fonts -->
+    <link th:href="@{/vendor/font-awesome/css/font-awesome.min.css}" href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+	<div class="container my-2">
+	<h1>Line Items</h1>
+	
+		<table border="1" class = "table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=id&sortDirection=' + ${reverseSortsortDirection}}">
+							ID</a>
+					</th>
+                    <th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=name&sortDirection=' + ${reverseSortsortDirection}}">
+							Name</a>
+					</th>
+                    <th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=bookAmount&sortDirection=' + ${reverseSortsortDirection}}">
+							Book Amount</a>
+					</th>
+                    <th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=actualAmount&sortDirection=' + ${reverseSortsortDirection}}">
+							Actual Amopunt</a>
+					</th>
+                    <th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=adjustments&sortDirection=' + ${reverseSortsortDirection}}">
+							Adjustments</a>
+					</th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="lineItem : ${lineItemList}">
+					<td th:text="${lineItem.id}"></td>
+                    <td th:text="${lineItem.name}"></td>
+                    <td th:text="${lineItem.bookedAmount}"></td>
+                    <td th:text="${lineItem.actualAmount}"></td>
+                    <td th:text="${lineItem.adjustments}"></td>
+					<td> </td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div th:if = "${totalPages > 1}">
+			<div class = "row col-sm-10">
+				<div class = "col-sm-2">
+					Total Rows: [[${totalItems}]] 
+				</div>
+				<div class = "col-sm-8">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/lineItems/page/' + ${i}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+				</div>
+				<div class = "col-sm-1">
+					<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${currentPage + 1}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+					<span th:unless="${currentPage < totalPages}">Next</span>
+				</div>
+				
+				 <div class="col-sm-1">
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${totalPages}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+					<span th:unless="${currentPage < totalPages}">Last</span>
+   				 </div>
+			</div>
+		</div>
+	</div>
+</body>
