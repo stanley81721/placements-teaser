@@ -42,6 +42,10 @@
 						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=adjustments&sortDirection=' + ${reverseSortsortDirection}}">
 							Adjustments</a>
 					</th>
+					<th>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=billableAmount&sortDirection=' + ${reverseSortsortDirection}}">
+							Billable Amount</a>
+					</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
@@ -52,6 +56,7 @@
                     <td th:text="${lineItem.bookedAmount}"></td>
                     <td th:text="${lineItem.actualAmount}"></td>
                     <td th:text="${lineItem.adjustments}"></td>
+					<td th:text="${lineItem.billableAmount}"></td>
 					<td> </td>
 				</tr>
 			</tbody>

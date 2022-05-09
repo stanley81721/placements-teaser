@@ -28,5 +28,14 @@ public class LineItem {
     private BigDecimal bookedAmount;
     @JsonProperty(value="actual_amount")
     private BigDecimal actualAmount;
-    private BigDecimal adjustments;    
+    private BigDecimal adjustments;
+    private BigDecimal billableAmount;
+    
+    public BigDecimal getBillableAmount() {
+        return this.actualAmount.add(this.adjustments);
+    }
+
+    public void setBillableAmount(BigDecimal billableAmount) {
+        this.billableAmount = billableAmount;
+    }
 }
