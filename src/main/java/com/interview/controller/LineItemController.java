@@ -2,7 +2,9 @@ package com.interview.controller;
 
 import java.util.List;
 
+import com.interview.model.Campaign;
 import com.interview.model.LineItem;
+import com.interview.service.CampaignService;
 import com.interview.service.LineItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class LineItemController {
 
     @Autowired
     private LineItemService lineItemService;
+
+    @Autowired
+    private CampaignService campaignService;
 
     // @GetMapping("/lineItems")
     // public String viewCampaigns(@ModelAttribute("lineItem") LineItem lineItem, Model model) {
@@ -49,17 +54,19 @@ public class LineItemController {
         int pageSize = 50;
         
         Page<LineItem> page = lineItemService.findPageinated(campaignId, pageNo, pageSize, sortField, sortDirection);
+        Campaign campaign = campaignService.getCampaignById(campaignId);
         List<LineItem> lineItemList = page.getContent();
         
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
+        System.out.println(sortDirection);
         model.addAttribute("campaignId", campaignId);
         model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
+        model.addAttribute("campaign", campaign);
         model.addAttribute("lineItemList", lineItemList);
         return "lineItems/index";
     }

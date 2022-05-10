@@ -34,7 +34,7 @@ public class CampaignController {
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
+        
         model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");

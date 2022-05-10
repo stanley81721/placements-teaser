@@ -8,37 +8,37 @@
 <body>
 
 	<div class="container my-2">
-	<h1>Line Items</h1>
+	<h1 th:text="${campaign.campaignName}"></h1>
+	<h3>Line Items</h3>
 	
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=id&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=id&sortDirection=' + ${reverseSortDirection}}">
 							ID</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=name&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=name&sortDirection=' + ${reverseSortDirection}}">
 							Name</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=bookAmount&sortDirection=' + ${reverseSortsortDirection}}">
-							Book Amount</a>
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=bookedAmount&sortDirection=' + ${reverseSortDirection}}">
+							Booked Amount</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=actualAmount&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=actualAmount&sortDirection=' + ${reverseSortDirection}}">
 							Actual Amopunt</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=adjustments&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=adjustments&sortDirection=' + ${reverseSortDirection}}">
 							Adjustments</a>
 					</th>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=billableAmount&sortDirection=' + ${reverseSortsortDirection}}">
-							Billable Amount</a>
+						Billable Amount
 					</th>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + 'sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
 							Comment</a>
 					</th>
 					<th> Actions </th>
