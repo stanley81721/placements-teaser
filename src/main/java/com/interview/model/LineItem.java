@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Entity
@@ -29,13 +31,11 @@ public class LineItem {
     @JsonProperty(value="actual_amount")
     private BigDecimal actualAmount;
     private BigDecimal adjustments;
+    @Getter(AccessLevel.NONE)
     private BigDecimal billableAmount;
+    private String comment;
     
     public BigDecimal getBillableAmount() {
         return this.actualAmount.add(this.adjustments);
-    }
-
-    public void setBillableAmount(BigDecimal billableAmount) {
-        this.billableAmount = billableAmount;
     }
 }
