@@ -13,7 +13,6 @@
 		<form action="#" th:action="@{/lineItems/saveLineItem}" th:object="${lineItem}" method="POST">
             <!-- Add hidden form field to handle update -->
 			<input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{campaignId}" />
             <input type="hidden" th:field="*{name}" />
             <input type="hidden" th:field="*{bookedAmount}" />
             <input type="hidden" th:field="*{actualAmount}" />

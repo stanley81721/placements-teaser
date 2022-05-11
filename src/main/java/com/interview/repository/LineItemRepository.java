@@ -12,9 +12,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LineItemRepository extends JpaRepository<LineItem, Integer> {
-    List<LineItem> findByCampaignId(Integer campaignId);
-
-    @Query(value = "select li from LineItem li where li.campaignId = ?1",
-           countQuery = "select count(li) from LineItem li where li.campaignId = ?1")
+    
+    @Query(value = "select li from LineItem li where li.campaign.campaignId = ?1",
+           countQuery = "select count(li) from LineItem li where li.campaign.campaignId = ?1")
     Page<LineItem> findLineItemByCampaignId(int campaignId, Pageable pageable);
 }

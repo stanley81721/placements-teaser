@@ -52,15 +52,11 @@ public class LineItemServiceImpl implements LineItemService {
     }
 
     @Override
-    public List<LineItem> getLineItemByCampaignId(int campaignId) {
-        return lineItemRepository.findByCampaignId(campaignId);
-    }
-
-    @Override
     public Page<LineItem> findPageinated(int campaignId, int pageNo, int pageSize, String sortField, String sortDirection) {
         System.out.println("findPageinated sortField = " + sortField +  " sortDirection = " + sortDirection);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return lineItemRepository.findLineItemByCampaignId(campaignId, pageable);
     }
+
 }

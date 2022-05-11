@@ -1,5 +1,6 @@
 package com.interview.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.interview.model.Campaign;
@@ -26,16 +27,16 @@ public class LineItemController {
     @Autowired
     private CampaignService campaignService;
 
-    // @GetMapping("/lineItems")
-    // public String viewCampaigns(@ModelAttribute("lineItem") LineItem lineItem, Model model) {
-    //     return fingPageinated(1, lineItem.getCampaignId(), "campaignName", "asc", model);
-    // }
-
     @PostMapping("/lineItems/saveLineItem")
     public String saveLineItem(@ModelAttribute("lineItem") LineItem lineItem) {
         // save lineItem to database
-        lineItemService.save(lineItem);
-        return "redirect:/lineItems/page/1?campaignId=" + String.valueOf(lineItem.getCampaignId()) + "&sortField=id&sortDirection=asc";
+        LineItem resultLineItem = lineItemService.getLineItemById(lineItem.getId());
+        resultLineItem.setAdjustments(lineItem.getAdjustments());
+        resultLineItem.setComment(lineItem.getComment());
+
+        lineItemService.save(resultLineItem);
+
+        return "redirect:/lineItems/page/1?campaignId=" + String.valueOf(resultLineItem.getCampaign().getCampaignId()) + "&sortField=id&sortDirection=asc";
     }
 
     @GetMapping("/showLineItemForUpdate/{id}")
@@ -46,6 +47,7 @@ public class LineItemController {
 		
 		// set lineItem as a model attribute to pre-populate the form
 		model.addAttribute("lineItem", lineItem);
+
 		return "/lineItems/detail";
 	}
     
@@ -56,18 +58,20 @@ public class LineItemController {
         Page<LineItem> page = lineItemService.findPageinated(campaignId, pageNo, pageSize, sortField, sortDirection);
         Campaign campaign = campaignService.getCampaignById(campaignId);
         List<LineItem> lineItemList = page.getContent();
-        
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        System.out.println(sortDirection);
+        
         model.addAttribute("campaignId", campaignId);
         model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDirection", sortDirection);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("campaign", campaign);
+        model.addAttribute("subTotals", campaign.getSubTotals());
         model.addAttribute("lineItemList", lineItemList);
+
         return "lineItems/index";
     }
 }

@@ -1,41 +1,50 @@
 package com.interview.model;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name = "LINE_ITEM")
 public class LineItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @JsonProperty(value = "campaign_id")
-    private Integer campaignId;
-    @JsonProperty(value="line_item_name")
     private String name;
-    @JsonProperty(value="booked_amount")
     private BigDecimal bookedAmount;
-    @JsonProperty(value="actual_amount")
     private BigDecimal actualAmount;
     private BigDecimal adjustments;
     @Getter(AccessLevel.NONE)
     @Transient
     private BigDecimal billableAmount;
     private String comment;
+    @ManyToOne
+    @JoinColumn(name="campaign_id", nullable=false)
+    private Campaign campaign;
+    
     
     public BigDecimal getBillableAmount() {
         return this.actualAmount.add(this.adjustments);

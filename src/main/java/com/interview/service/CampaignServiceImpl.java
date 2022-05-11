@@ -57,4 +57,5 @@ public class CampaignServiceImpl implements CampaignService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.campaignRepository.findAll(pageable);
     }
+	
 }

@@ -25,23 +25,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "CAMPAIGN")
-public class Campaign {
+@Table(name = "INVOICE")
+public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer campaignId;
-    private String campaignName;
-    @OneToMany(mappedBy = "campaign", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<LineItem> lineItems;
+    private Integer invoiceId;
+    @OneToMany(mappedBy = "campaignId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Campaign> campaigns;
     @Transient
-    private BigDecimal subTotals;
+    private BigDecimal grandTotals;
 
-    public BigDecimal getSubTotals() {
-        BigDecimal subTotals = new BigDecimal(0);
-        for(LineItem lineItem : lineItems) {
-            subTotals = subTotals.add(lineItem.getBillableAmount()); 
+    public BigDecimal getGrandTotals() {
+        BigDecimal grandTotals = new BigDecimal(0);
+        for(Campaign campaign : this.campaigns) {
+            grandTotals.add(campaign.getSubTotals());
         }
-        return subTotals;
+        return grandTotals;
     }
 }

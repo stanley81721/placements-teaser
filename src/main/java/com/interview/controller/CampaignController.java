@@ -40,6 +40,7 @@ public class CampaignController {
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("campaignList", campaignList);
+        
         return "campaigns/index";
     }
 }
