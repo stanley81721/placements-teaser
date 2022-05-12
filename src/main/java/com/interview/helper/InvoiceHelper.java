@@ -12,7 +12,6 @@ public class InvoiceHelper {
         Timestamp time= new Timestamp(System.currentTimeMillis());
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
         String invoiceNumber = df.format(time); 
-        System.out.println(invoiceNumber);
 
         return invoiceNumber;
     }

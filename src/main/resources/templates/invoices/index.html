@@ -11,21 +11,21 @@
 	<div class="container my-2">
 	<h1>Campaigns</h1>
     <div><a th:href="@{'/invoices/addInvoice'}" class="btn btn-primary">Add Invoice</a></div>
-	<!--
+	
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/invoices/page/' + ${currentPage} + '?sortField=campaignName&sortDirection=' + ${reverseSortDirection}}">
-							Caipaign Name</a>
+						<a th:href="@{'/invoices/page/' + ${currentPage} + '?sortField=invoiceNumber&sortDirection=' + ${reverseSortDirection}}">
+							Invoice Number</a>
 					</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="invoice : ${invoiceList}">
-					<td th:text="${campaign.campaignName}"></td>
-					<td><a th:href="@{'/lineItems/page/campaign/1?campaignId=' + ${campaign.campaignId} + '&sortField=id&sortDirection=asc'}" class="btn btn-primary">View Line Items</a></td>
+					<td th:text="${invoice.invoiceNumber}"></td>
+					<td><a th:href="@{/invoices/showInvoiceDetail/{id}(id=${invoice.invoiceId})}" class="btn btn-primary">View Detail</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -37,22 +37,22 @@
 				</div>
 				<div class = "col-sm-8">
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/campaigns/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+						<a th:if="${currentPage != i}" th:href="@{'/invoices/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
 						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
 					</span>
 				</div>
 				<div class = "col-sm-1">
-					<a th:if="${currentPage < totalPages}" th:href="@{'/campaigns/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+					<a th:if="${currentPage < totalPages}" th:href="@{'/invoices/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
 					<span th:unless="${currentPage < totalPages}">Next</span>
 				</div>
 				
 				 <div class="col-sm-1">
-    				<a th:if="${currentPage < totalPages}" th:href="@{'/campaigns/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/invoices/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
 					<span th:unless="${currentPage < totalPages}">Last</span>
    				 </div>
 			</div>
 		</div>
 	</div>
-    -->
+    
 	<div th:replace="~{fragments/footer :: footer}"></div>
 </body>

@@ -6,16 +6,10 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Employee Management System</h1>
-		<hr>
-		<h2>Update Employee</h2>
+		<h2>Update Line Item</h2>
 
 		<form action="#" th:action="@{/lineItems/saveLineItem}" th:object="${lineItem}" method="POST">
             <!-- Add hidden form field to handle update -->
-			<input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{name}" />
-            <input type="hidden" th:field="*{bookedAmount}" />
-            <input type="hidden" th:field="*{actualAmount}" />
             <table>
                 <tr>
                     <td>Name</td>

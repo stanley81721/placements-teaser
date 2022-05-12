@@ -51,8 +51,7 @@ public class LineItemController {
 		
 		// set lineItem as a model attribute to pre-populate the form
 		model.addAttribute("lineItem", lineItem);
-        System.out.println(model.getAttribute("page")); 
-
+        
 		return "/lineItems/detail";
 	}
 
