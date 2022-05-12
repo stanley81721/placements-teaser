@@ -1,6 +1,5 @@
 package com.interview.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import com.interview.model.Campaign;
@@ -27,6 +26,11 @@ public class LineItemController {
     @Autowired
     private CampaignService campaignService;
 
+    @GetMapping("/lineItemss")
+    public String viewCampaigns(Model model) {
+        return fingPageinated(1, "campaignName", "asc", model);
+    }
+
     @PostMapping("/lineItems/saveLineItem")
     public String saveLineItem(@ModelAttribute("lineItem") LineItem lineItem) {
         // save lineItem to database
@@ -47,15 +51,36 @@ public class LineItemController {
 		
 		// set lineItem as a model attribute to pre-populate the form
 		model.addAttribute("lineItem", lineItem);
+        System.out.println(model.getAttribute("page")); 
 
 		return "/lineItems/detail";
 	}
-    
+
     @GetMapping("/lineItems/page/{pageNo}")
-    public String fingPageinated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("campaignId") int campaignId, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection, Model model) {
+    public String fingPageinated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection, Model model) {
+        int pageSize = 50;
+
+        Page<LineItem> page = lineItemService.findPageinated(pageNo, pageSize, sortField, sortDirection);
+        List<LineItem> lineItemList = page.getContent();
+        
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        
+        model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
+
+        model.addAttribute("lineItemList", lineItemList);
+        
+        return "lineItems/index";
+    }
+    
+    @GetMapping("/lineItems/page/campaign/{pageNo}")
+    public String fingPageinatedLineItemsByCampaignId(@PathVariable(value = "pageNo") int pageNo, @RequestParam("campaignId") int campaignId, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection, Model model) {
         int pageSize = 50;
         
-        Page<LineItem> page = lineItemService.findPageinated(campaignId, pageNo, pageSize, sortField, sortDirection);
+        Page<LineItem> page = lineItemService.findPageinatedByCampaignId(campaignId, pageNo, pageSize, sortField, sortDirection);
         Campaign campaign = campaignService.getCampaignById(campaignId);
         List<LineItem> lineItemList = page.getContent();
 
@@ -72,6 +97,6 @@ public class LineItemController {
         model.addAttribute("subTotals", campaign.getSubTotals());
         model.addAttribute("lineItemList", lineItemList);
 
-        return "lineItems/index";
+        return "lineItems/indexCampaign";
     }
 }

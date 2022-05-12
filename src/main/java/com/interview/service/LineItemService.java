@@ -13,6 +13,7 @@ public interface LineItemService {
     void saveAllLineItems(List<LineItem> lineItems);
     LineItem getLineItemById(int id);
 	void deleteLineItemById(int id);
-    Page<LineItem> findPageinated(int campaign, int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<LineItem> findPageinated(int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<LineItem> findPageinatedByCampaignId(int campaign, int pageNo, int pageSize, String sortField, String sortDirection);
     
 }
