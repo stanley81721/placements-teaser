@@ -1,6 +1,7 @@
 package com.interview.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,7 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -31,8 +34,16 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer invoiceId;
-    @OneToMany(mappedBy = "campaignId", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Campaign> campaigns;
+    private String invoiceNumber;
+    @ManyToMany(fetch = FetchType.LAZY,
+    cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(name = "invoice_campaign",
+      joinColumns = { @JoinColumn(name = "invoice_id") },
+      inverseJoinColumns = { @JoinColumn(name = "campaign_id") })
+    private List<Campaign> campaigns;
     @Transient
     private BigDecimal grandTotals;
 

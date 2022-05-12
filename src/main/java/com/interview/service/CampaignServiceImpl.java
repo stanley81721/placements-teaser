@@ -57,5 +57,10 @@ public class CampaignServiceImpl implements CampaignService {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.campaignRepository.findAll(pageable);
     }
+
+	@Override
+	public List<Campaign> getCampaignsByCampaignIds(List<Integer> campaignIds) {
+		return this.campaignRepository.findByCampaignIdIn(campaignIds);
+	}
 	
 }

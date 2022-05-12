@@ -16,5 +16,6 @@ public interface CampaignService {
 	Campaign getCampaignById(int id);
 	void deleteCampaignById(int id);
     Page<Campaign> findPageinated(int pageNo, int pageSize, String sortField, String sortDirection);
+    List<Campaign> getCampaignsByCampaignIds(List<Integer> campaignIds);
     
 }

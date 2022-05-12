@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -36,6 +39,13 @@ public class Campaign {
     private Set<LineItem> lineItems;
     @Transient
     private BigDecimal subTotals;
+    @ManyToMany(fetch = FetchType.LAZY,
+      cascade = {
+          CascadeType.PERSIST,
+          CascadeType.MERGE
+      },
+      mappedBy = "campaigns")
+    private Set<Invoice> invoices;
 
     public BigDecimal getSubTotals() {
         BigDecimal subTotals = new BigDecimal(0);
