@@ -40,7 +40,7 @@ public class LineItemController {
 
         lineItemService.save(resultLineItem);
 
-        return "redirect:/lineItems/page/1?campaignId=" + String.valueOf(resultLineItem.getCampaign().getCampaignId()) + "&sortField=id&sortDirection=asc";
+        return "redirect:/lineItems/page/campaign/1?campaignId=" + String.valueOf(resultLineItem.getCampaign().getCampaignId()) + "&sortField=id&sortDirection=asc";
     }
 
     @GetMapping("/showLineItemForUpdate/{id}")

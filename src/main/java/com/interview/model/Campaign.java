@@ -1,6 +1,7 @@
 package com.interview.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -34,7 +35,7 @@ public class Campaign {
     private Integer campaignId;
     private String campaignName;
     @OneToMany(mappedBy = "campaign", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<LineItem> lineItems;
+    private List<LineItem> lineItems;
     @Transient
     private BigDecimal subTotals;
     @ManyToMany(fetch = FetchType.LAZY,
@@ -43,7 +44,7 @@ public class Campaign {
           CascadeType.MERGE
       },
       mappedBy = "campaigns")
-    private Set<Invoice> invoices;
+    private List<Invoice> invoices;
 
     public BigDecimal getSubTotals() {
         BigDecimal subTotals = new BigDecimal(0);

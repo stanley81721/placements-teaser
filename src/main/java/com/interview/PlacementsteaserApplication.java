@@ -55,7 +55,7 @@ public class PlacementsteaserApplication {
 				campaignList.add(campaign);
 				lineItemList.add(lineItem);
 			}
-
+ 
 			campaignService.saveAllCampaigns(campaignList);
 			lineItemService.saveAllLineItems(lineItemList);
 			

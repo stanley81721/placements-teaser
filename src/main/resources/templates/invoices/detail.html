@@ -8,6 +8,8 @@
 <body>
     <div class="container">
 		<h2>Invoice Detail</h2>
+
+        <div><a th:href="@{/invoices/export/excel/{id}(id=${invoice.invoiceId})}" class="btn btn-primary">Export Excel</a></div>
         
         <table th:each="campaign : ${invoice.campaigns}">
             <thead class="table-success">

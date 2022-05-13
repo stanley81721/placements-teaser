@@ -10,6 +10,7 @@
 
 		<form action="#" th:action="@{/lineItems/saveLineItem}" th:object="${lineItem}" method="POST">
             <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
             <table>
                 <tr>
                     <td>Name</td>
@@ -38,7 +39,7 @@
 		
 		<hr>
 		
-		<a th:href = "@{/lineItems/page/1?sortField=id&sortDirection=asc}"> Back to Line Item List</a>
+		<a th:href = "@{'/lineItems/page/campaign/1?campaignId=' + ${lineItem.campaign.campaignId} + '&sortField=id&sortDirection=asc'}"> Back to Line Item List</a>
 	</div>
 </body>
 </html>

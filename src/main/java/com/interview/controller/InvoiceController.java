@@ -1,8 +1,15 @@
 package com.interview.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import com.interview.helper.InvoiceExcelExporter;
 import com.interview.helper.InvoiceHelper;
 import com.interview.model.Campaign;
 import com.interview.model.Invoice;
@@ -80,6 +87,23 @@ public class InvoiceController {
         model.addAttribute("invoiceList", invoiceList);
         
         return "invoices/index";
+    }
+
+    @GetMapping("/invoices/export/excel/{id}")
+    public void exportToExcel(HttpServletResponse response, @PathVariable ( value = "id") int id) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=invoice_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+         
+        Invoice invoice = invoiceService.getInvoiceById(id);
+         
+        InvoiceExcelExporter invoiceExcelExporter = new InvoiceExcelExporter(invoice);
+         
+        invoiceExcelExporter.export(response);    
     }
 
 }
