@@ -49,7 +49,7 @@ public class Invoice {
     public BigDecimal getGrandTotals() {
         BigDecimal grandTotals = new BigDecimal(0);
         for(Campaign campaign : this.campaigns) {
-            grandTotals.add(campaign.getSubTotals());
+            grandTotals = grandTotals.add(campaign.getSubTotals());
         }
         return grandTotals;
     }

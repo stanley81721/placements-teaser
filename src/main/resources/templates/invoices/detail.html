@@ -9,7 +9,10 @@
     <div class="container">
 		<h2>Invoice Detail</h2>
 
-        <div><a th:href="@{/invoices/export/excel/{id}(id=${invoice.invoiceId})}" class="btn btn-primary">Export Excel</a></div>
+        <div>
+            <a th:href="@{/invoices/export/excel/{id}(id=${invoice.invoiceId})}" class="btn btn-primary">Export Excel</a>
+            <a th:href="@{/invoices/upload/excel/{id}(id=${invoice.invoiceId})}" class="btn btn-primary">Upload to Cloud</a>
+        </div>
         
         <table th:each="campaign : ${invoice.campaigns}">
             <thead class="table-success">
@@ -43,5 +46,8 @@
 				</tr>
             </tbody>
         </table>
-        
+        <div>
+			<h3 th:text="'Grand Totals:' + ${invoice.getGrandTotals}"></h3>
+		</div>
+        <a th:href = "@{'/invoices/page/1?sortField=invoiceNumber&sortDirection=asc'}"> Back to Invoice List</a>
 </body>

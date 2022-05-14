@@ -1,5 +1,6 @@
 package com.interview.helper;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +20,9 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class InvoiceExcelExporter {
 
     private XSSFWorkbook workbook;
@@ -146,6 +150,31 @@ public class InvoiceExcelExporter {
     }
      
     public void export(HttpServletResponse response) throws IOException {
+        this.generateExcelContent();
+         
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+         
+        outputStream.close();
+    }
+
+    public ByteArrayOutputStream exportForAWSS3() {
+        this.generateExcelContent();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            workbook.write(byteArrayOutputStream);
+            workbook.close();
+            byteArrayOutputStream.close();
+        } catch (IOException e) {
+            log.error("Error writing excel data for AWS S3!", e);
+        }
+
+        return byteArrayOutputStream;
+    }
+
+    public void generateExcelContent() {
         writeInvoiceHeader();
         for(int i = 0;i < invoice.getCampaigns().size();i++) {
             writeCampaignHeader(rowCount, invoice.getCampaigns().get(i));
@@ -153,12 +182,6 @@ public class InvoiceExcelExporter {
             writeLineItemData(rowCount, invoice.getCampaigns().get(i).getLineItems());
         }
         writeGrandTotal(rowCount, invoice.getCampaigns());
-         
-        ServletOutputStream outputStream = response.getOutputStream();
-        workbook.write(outputStream);
-        workbook.close();
-         
-        outputStream.close();
     }
     
 }

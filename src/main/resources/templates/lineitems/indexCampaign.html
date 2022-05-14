@@ -81,7 +81,9 @@
    				 </div>
 			</div>
 		</div>
-		<h3 th:text="${subTotals}"></h3>
+		<div>
+			<h3 th:text="'Sub Totals:' + ${subTotals}"></h3>
+		</div>
 	</div>
 
 	<div th:replace="~{fragments/footer :: footer}"></div>
