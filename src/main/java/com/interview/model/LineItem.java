@@ -41,9 +41,19 @@ public class LineItem {
     @ManyToOne
     @JoinColumn(name="campaign_id", nullable=false)
     private Campaign campaign;
-    
+    private Integer status = 0;
+    @Transient
+    private String statusStr;
     
     public BigDecimal getBillableAmount() {
         return this.actualAmount.add(this.adjustments);
+    }
+
+    public String getStatusStr() {
+        if(this.status == 1) {
+            return "Reviewed";
+        } else {
+            return "Unreviewed";
+        }
     }
 }

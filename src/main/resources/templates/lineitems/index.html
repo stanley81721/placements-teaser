@@ -38,6 +38,9 @@
 						Billable Amount
 					</th>
 					<th>
+						Status
+					</th>
+					<th>
 						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
 							Comment</a>
 					</th>
@@ -53,7 +56,8 @@
                     <td th:text="${lineItem.adjustments}"></td>
 					<td th:text="${lineItem.billableAmount}"></td>
 					<td th:text="${lineItem.comment}"></td>
-					<td><a th:href="@{/showLineItemForUpdate/{id}(id=${lineItem.id})}" class="btn btn-primary">Update</a></td>
+					<td th:text="${lineItem.statusStr}"></td>
+					<td><a th:href="@{/showLineItemForUpdate/{id}(id=${lineItem.id})}" th:if="${lineItem.status != 1}" class="btn btn-primary">Update</a></td>
 				</tr>
 			</tbody>
 		</table>

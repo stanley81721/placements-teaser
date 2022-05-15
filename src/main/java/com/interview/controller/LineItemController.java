@@ -2,6 +2,7 @@ package com.interview.controller;
 
 import java.util.List;
 
+import com.interview.common.Constants;
 import com.interview.model.Campaign;
 import com.interview.model.LineItem;
 import com.interview.service.CampaignService;
@@ -32,11 +33,16 @@ public class LineItemController {
     }
 
     @PostMapping("/lineItems/saveLineItem")
-    public String saveLineItem(@ModelAttribute("lineItem") LineItem lineItem) {
+    public String saveLineItem(@ModelAttribute("lineItem") LineItem lineItem, @RequestParam(value = "inputReviewed", required = false) String inputReviewed) {
         // save lineItem to database
         LineItem resultLineItem = lineItemService.getLineItemById(lineItem.getId());
         resultLineItem.setAdjustments(lineItem.getAdjustments());
         resultLineItem.setComment(lineItem.getComment());
+        if(null != inputReviewed) {
+            resultLineItem.setStatus(Constants.Reviewable.REVIEWDED);
+        } else {
+            resultLineItem.setStatus(Constants.Reviewable.UNREVIEWED);
+        }
 
         lineItemService.save(resultLineItem);
 
