@@ -38,7 +38,7 @@ public class InvoiceController {
     private InvoiceHelper invoiceHelper;
 
     @GetMapping("/invoices")
-    public String viewCampaigns(Model model) {
+    public String viewInvoices(Model model) {
         return fingPageinated(1, "invoiceNumber", "asc", model);
     }
 

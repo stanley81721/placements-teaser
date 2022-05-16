@@ -1,11 +1,14 @@
 package com.interview.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import com.interview.common.Constants;
 import com.interview.model.Campaign;
+import com.interview.model.ChangeLog;
 import com.interview.model.LineItem;
 import com.interview.service.CampaignService;
+import com.interview.service.ChangeLogService;
 import com.interview.service.LineItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,9 @@ public class LineItemController {
     @Autowired
     private CampaignService campaignService;
 
+    @Autowired
+    private ChangeLogService changeLogService;
+
     @GetMapping("/lineItemss")
     public String viewCampaigns(Model model) {
         return fingPageinated(1, "campaignName", "asc", model);
@@ -44,14 +50,33 @@ public class LineItemController {
         } else {
             username = principal.toString();
         }
-        System.out.println(username);
+        
         LineItem resultLineItem = lineItemService.getLineItemById(lineItem.getId());
-        resultLineItem.setAdjustments(lineItem.getAdjustments());
-        resultLineItem.setComment(lineItem.getComment());
+        String changeContent = "";
+        if(!resultLineItem.getAdjustments().equals(lineItem.getAdjustments())) {
+            resultLineItem.setAdjustments(lineItem.getAdjustments());
+            changeContent = "Adjustment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
+        } else if (!resultLineItem.getComment().equals(lineItem.getComment())) {
+            resultLineItem.setComment(lineItem.getComment());
+            changeContent = changeContent + ", Comment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
+        }
+        
         if(null != inputReviewed) {
             resultLineItem.setStatus(Constants.Reviewable.REVIEWDED);
+            changeContent = changeContent + ", Status change from Unreviewed to Reviewed";
         } else {
-            resultLineItem.setStatus(Constants.Reviewable.UNREVIEWED);
+            if(resultLineItem.getStatus() != 0) {
+                resultLineItem.setStatus(Constants.Reviewable.UNREVIEWED);
+                changeContent = changeContent + ", Status change from Reviewed to Unreviewed";
+            }
+        }
+
+        if(!changeContent.equals("")) {
+            ChangeLog changeLog = new ChangeLog();
+            changeLog.setContent(changeContent);
+            changeLog.setCreateId(username);
+            changeLog.setCreateTimestamp(new java.sql.Timestamp(new Date().getTime()));
+            changeLogService.save(changeLog);
         }
 
         lineItemService.save(resultLineItem);
