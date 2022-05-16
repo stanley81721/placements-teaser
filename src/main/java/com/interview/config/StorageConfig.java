@@ -1,4 +1,4 @@
-package com.interview.aws;
+package com.interview.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

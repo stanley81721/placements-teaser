@@ -12,6 +12,11 @@ public class NavigationController {
         model.addAttribute("activePage", "info");
         return "home";
     }
+
+    @GetMapping("/login")
+	public String login() {
+		return "/user/login";
+	}
     
     @GetMapping("/Campaigns")
     public String getCampaign(Model model) {
