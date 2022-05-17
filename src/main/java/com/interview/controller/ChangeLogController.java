@@ -21,7 +21,8 @@ public class ChangeLogController {
 
     @GetMapping("/changeLogs")
     public String viewChangeLogs(Model model) {
-        return fingPageinated(1, "invoiceNumber", "asc", model);
+        model.addAttribute("activePage", "changeLogs");
+        return fingPageinated(1, "content", "asc", model);
     }
 
     @GetMapping("/changeLogs/page/{pageNo}")
@@ -40,6 +41,7 @@ public class ChangeLogController {
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("changeLogList", changeLogList);
+        model.addAttribute("activePage", "changeLogs");
         
         return "changeLogs/index";
     }

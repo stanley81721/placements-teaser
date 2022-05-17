@@ -39,11 +39,13 @@ public class InvoiceController {
 
     @GetMapping("/invoices")
     public String viewInvoices(Model model) {
+        model.addAttribute("activePage", "invoices");
         return fingPageinated(1, "invoiceNumber", "asc", model);
     }
 
     @GetMapping("/invoices/addInvoice")
     public String addInvoice(Model model) {
+        model.addAttribute("activePage", "invoices");
         model.addAttribute("campaignList", campaignService.getAllCampaigns());
 
         return "/invoices/addInvoice";
@@ -65,6 +67,7 @@ public class InvoiceController {
     public String showInvoiceDetail(@PathVariable ( value = "id") int id, Model model) {
         Invoice invoice = invoiceService.getInvoiceById(id);
         model.addAttribute("invoice", invoice);
+        model.addAttribute("activePage", "invoices");
 
         return "/invoices/detail";
     }
@@ -85,6 +88,7 @@ public class InvoiceController {
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("invoiceList", invoiceList);
+        model.addAttribute("activePage", "invoices");
         
         return "invoices/index";
     }

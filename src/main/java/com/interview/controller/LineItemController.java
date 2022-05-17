@@ -37,6 +37,7 @@ public class LineItemController {
 
     @GetMapping("/lineItemss")
     public String viewCampaigns(Model model) {
+        model.addAttribute("activePage", "lineItems");
         return fingPageinated(1, "campaignName", "asc", model);
     }
 
@@ -92,6 +93,7 @@ public class LineItemController {
 		
 		// set lineItem as a model attribute to pre-populate the form
 		model.addAttribute("lineItem", lineItem);
+        model.addAttribute("activePage", "lineItems");
         
 		return "/lineItems/detail";
 	}
@@ -112,6 +114,7 @@ public class LineItemController {
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("lineItemList", lineItemList);
+        model.addAttribute("activePage", "lineItems");
         
         return "lineItems/index";
     }
@@ -136,6 +139,7 @@ public class LineItemController {
         model.addAttribute("campaign", campaign);
         model.addAttribute("subTotals", campaign.getSubTotals());
         model.addAttribute("lineItemList", lineItemList);
+        model.addAttribute("activePage", "lineItems");
 
         return "lineItems/indexCampaign";
     }

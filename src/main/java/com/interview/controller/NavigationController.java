@@ -17,17 +17,5 @@ public class NavigationController {
 	public String login() {
 		return "/user/login";
 	}
-    
-    @GetMapping("/Campaigns")
-    public String getCampaign(Model model) {
-        model.addAttribute("activePage", "Campaigns");
-        return "redirect:/campaigns";
-    }
-
-    @GetMapping("/LineItems")
-    public String getLineItem(Model model) {
-        model.addAttribute("activePage", "LineItem");
-        return "redirect:/campaigns";
-    }
 
 }

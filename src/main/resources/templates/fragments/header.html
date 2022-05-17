@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Placement-Teaser</title>
@@ -16,23 +16,21 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'campaign'} ? 'nav-item active' : 'nav-item'">
+            <li class="nav-item" th:class="${activePage == 'campaigns'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{'/campaigns/page/1?sortField=campaignName&sortDirection=asc'}">Campaign</a>
             </li>
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'linItem'} ? 'nav-item active' : 'nav-item'">
+            <li class="nav-item" th:class="${activePage == 'linItems'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/lineItems/page/1?sortField=id&sortDirection=asc}">Line Item</a>
             </li>
-            <li class="nav-item" th:class="${activePage == 'invoice'} ? 'nav-item active' : 'nav-item'">
+            <li class="nav-item" th:class="${activePage == 'invoices'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/invoices/page/1?sortField=invoiceNumber&sortDirection=asc}">Invoice</a>
             </li>
-            <li class="nav-item" th:class="${activePage == 'changeLog'} ? 'nav-item active' : 'nav-item'">
+            <li class="nav-item" th:class="${activePage == 'changeLogs'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/changeLogs/page/1?sortField=createTimestamp&sortDirection=asc}">Change Log</a>
             </li>
         </ul>
 
-        <div sec:authorize="isAuthenticated()">
+        <div th:if="${#request.isUserInRole('ROLE_USER')}">
             <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
                 <input hidden type="submit" value="Sign Out" />
             </form>

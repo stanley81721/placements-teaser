@@ -21,6 +21,7 @@ public class CampaignController {
 
     @GetMapping("/campaigns")
     public String viewCampaigns(Model model) {
+        model.addAttribute("activePage", "campaigns");
         return fingPageinated(1, "campaignName", "asc", model);
     }
 
@@ -40,6 +41,7 @@ public class CampaignController {
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("campaignList", campaignList);
+        model.addAttribute("activePage", "campaigns");
         
         return "campaigns/index";
     }
