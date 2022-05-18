@@ -14,9 +14,6 @@
 	<packaging>war</packaging>
 	<name>placementsteaser</name>
 	<description>Assignment for Placement.IO</description>
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
