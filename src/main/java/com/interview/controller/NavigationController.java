@@ -15,7 +15,7 @@ public class NavigationController {
 
     @GetMapping("/login")
 	public String login() {
-		return "/user/login";
+        return "user/login";
 	}
 
 }

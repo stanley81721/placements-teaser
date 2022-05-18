@@ -6,5 +6,9 @@ public final class Constants {
         public static final int REVIEWDED = 1;
         public static final int UNREVIEWED = 0;
     }
+
+    public interface Common {
+        public static final String EMPTY_STR = "";
+    }
     
 }
