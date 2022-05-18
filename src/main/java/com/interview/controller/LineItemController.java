@@ -57,7 +57,7 @@ public class LineItemController {
         if(!resultLineItem.getAdjustments().equals(lineItem.getAdjustments())) {
             resultLineItem.setAdjustments(lineItem.getAdjustments());
             changeContent = "Adjustment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
-        } else if (!resultLineItem.getComment().equals(lineItem.getComment())) {
+        } else if (null != resultLineItem.getComment() && !resultLineItem.getComment().equals(lineItem.getComment())) {
             resultLineItem.setComment(lineItem.getComment());
             changeContent = changeContent + ", Comment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
         }
