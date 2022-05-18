@@ -36,8 +36,8 @@ public class PlacementsteaserApplication {
 			
 			JSONTokener tokener = new JSONTokener(in);
 			JSONArray dataArray = new JSONArray(tokener);
-			List<Campaign> campaignList = new ArrayList<Campaign>();
-			List<LineItem> lineItemList = new ArrayList<LineItem>();
+			List<Campaign> campaignList = new ArrayList<>();
+			List<LineItem> lineItemList = new ArrayList<>();
 			for(int i = 0; i < dataArray.length(); i++) {
 				JSONObject object = dataArray.getJSONObject(i);
 				LineItem lineItem = new LineItem();
