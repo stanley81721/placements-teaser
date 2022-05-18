@@ -11,7 +11,7 @@
 	<groupId>com.interview</groupId>
 	<artifactId>placementsteaser</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>placementsteaser</name>
 	<description>Assignment for Placement.IO</description>
 	<properties>
