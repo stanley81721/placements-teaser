@@ -18,6 +18,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 @SpringBootApplication
@@ -31,8 +33,8 @@ public class PlacementsteaserApplication {
 	CommandLineRunner runner(CampaignService campaignService, LineItemService lineItemService) {
 		return args -> {
 			// read json and write to db
-			File file = ResourceUtils.getFile("classpath:placements_teaser_data.json");
-			InputStream in = new FileInputStream(file);
+			Resource resource = new ClassPathResource("placements_teaser_data.json");
+			InputStream in = resource.getInputStream();
 			
 			JSONTokener tokener = new JSONTokener(in);
 			JSONArray dataArray = new JSONArray(tokener);
