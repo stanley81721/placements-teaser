@@ -29,12 +29,13 @@
                 <a class="nav-link" th:href="@{/changeLogs/page/1?sortField=createTimestamp&sortDirection=asc}">Change Log</a>
             </li>
         </ul>
+    </div>
 
-        <div th:if="${#request.isUserInRole('ROLE_USER')}">
-            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-                <input hidden type="submit" value="Sign Out" />
-            </form>
-        </div>
+    <div class="float-right" style="color:white;" th:text="'Hello, ' + ${#authentication.name}"></div>
+    <div class="float-right" sec:authorize="${isAuthenticated()}">
+        <form name="logoutForm" th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-danger" />
+        </form>
     </div>
 </nav>
 </body>
