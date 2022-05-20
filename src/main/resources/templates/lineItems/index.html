@@ -12,7 +12,7 @@
 	<h1>Line Items</h1>
 
 		<form th:action="@{/lineItems/page/keyword/1}">
-			<input id="textSearch" type="text" name="keyword">
+			<input id="textSearch" type="text" name="keyword" placeholder="Please input campaign name to search">
 			<button type="submit">Go</button>
 		</form>
 	
@@ -20,23 +20,23 @@
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=id&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword}}">
 							ID</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword}}">
 							Name</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=bookedAmount&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=bookedAmount&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword}}">
 							Booked Amount</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=actualAmount&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=actualAmount&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword}}">
 							Actual Amopunt</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=adjustments&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=adjustments&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword}}">
 							Adjustments</a>
 					</th>
 					<th>
@@ -46,7 +46,7 @@
 						Status
 					</th>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
+						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?sortField=comment&sortDirection=' + ${reverseSortsortDirection} + '&keyword=' + ${keyword}}">
 							Comment</a>
 					</th>
 					<th> Actions </th>
@@ -74,17 +74,17 @@
 				</div>
 				<div class = "col-sm-8">
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/lineItems/page/' + ${i}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+						<a th:if="${currentPage != i}" th:href="@{'/lineItems/page/' + ${i}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + '&keyword=' + ${keyword}}">[[${i}]]</a>
 						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
 					</span>
 				</div>
 				<div class = "col-sm-1">
-					<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${currentPage + 1}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+					<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${currentPage + 1}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + '&keyword=' + ${keyword}}">Next</a>
 					<span th:unless="${currentPage < totalPages}">Next</span>
 				</div>
 				
 				 <div class="col-sm-1">
-    				<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${totalPages}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${totalPages}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection} + '&keyword=' + ${keyword}}">Last</a>
 					<span th:unless="${currentPage < totalPages}">Last</span>
    				 </div>
 			</div>
