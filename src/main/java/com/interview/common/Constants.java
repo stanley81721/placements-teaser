@@ -10,5 +10,11 @@ public final class Constants {
     public interface Common {
         public static final String EMPTY_STR = "";
     }
+
+    public interface JSONVariableName {
+        public static final String STATUS = "status";
+        public static final String STATUS_ERROR = "ERROR";
+        public static final String STATUS_SUCCESS = "SUCCESS";
+    }
     
 }

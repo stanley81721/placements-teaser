@@ -11,17 +11,14 @@ import com.interview.service.CampaignService;
 import com.interview.service.ChangeLogService;
 import com.interview.service.LineItemService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LineItemController {
@@ -123,6 +120,7 @@ public class LineItemController {
         
         model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("lineItemList", lineItemList);
@@ -152,7 +150,36 @@ public class LineItemController {
         model.addAttribute("subTotals", campaign.getSubTotals());
         model.addAttribute("lineItemList", lineItemList);
         model.addAttribute("activePage", "lineItems");
+        model.addAttribute("isChecked", campaign.getStatus() == Constants.Reviewable.REVIEWDED ? true : false);
 
         return "lineItems/indexCampaign";
     }
+
+    @RequestMapping(value = "/lineItems/markCampaignAsReviewed", method = RequestMethod.POST)
+    public @ResponseBody String markCampaignAsReviewed(@RequestBody String campaignIdJson) {
+        JSONObject resultObj = new JSONObject();
+        JSONObject convertObj = new JSONObject(campaignIdJson);
+        Integer campaignId = convertObj.getInt("campaignId");
+        boolean isChecked = convertObj.getBoolean("isChecked");
+        Campaign campaign = campaignService.getCampaignById(campaignId);
+        if(isChecked) {
+            campaign.setStatus(Constants.Reviewable.REVIEWDED);
+            for(LineItem lineItem : campaign.getLineItems()) {
+                lineItem.setStatus(Constants.Reviewable.REVIEWDED);
+            }
+        } else {
+            campaign.setStatus(Constants.Reviewable.UNREVIEWED);
+            for(LineItem lineItem : campaign.getLineItems()) {
+                lineItem.setStatus(Constants.Reviewable.UNREVIEWED);
+            }
+        }
+        lineItemService.saveAllLineItems(campaign.getLineItems());
+        campaignService.saveCampaign(campaign);
+
+        resultObj.put("isChecked", campaign.getStatus() == Constants.Reviewable.REVIEWDED ? true : false);
+        resultObj.put(Constants.JSONVariableName.STATUS, Constants.JSONVariableName.STATUS_SUCCESS);
+
+        return resultObj.toString();
+    }
+
 }

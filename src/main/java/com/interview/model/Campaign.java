@@ -38,12 +38,13 @@ public class Campaign {
     @Transient
     private BigDecimal subTotals;
     @ManyToMany(fetch = FetchType.LAZY,
-      cascade = {
-          CascadeType.PERSIST,
-          CascadeType.MERGE
-      },
-      mappedBy = "campaigns")
+        cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+        },
+        mappedBy = "campaigns")
     private List<Invoice> invoices;
+    private Integer status = 0;
 
     public BigDecimal getSubTotals() {
         BigDecimal subTotals = new BigDecimal(0);
