@@ -35,10 +35,10 @@ public class LineItemController {
     @Autowired
     private ChangeLogService changeLogService;
 
-    @GetMapping("/lineItemss")
-    public String viewCampaigns(Model model) {
+    @GetMapping("/lineItems")
+    public String viewCampaigns(Model model, @RequestParam(value = "keyword", required = false) String keyword) {
         model.addAttribute("activePage", "lineItems");
-        return fingPageinated(1, "campaignName", "asc", model);
+        return fingPageinated(1, "id", "asc", keyword, model);
     }
 
     @PostMapping("/lineItems/saveLineItem")
@@ -57,7 +57,7 @@ public class LineItemController {
         if(!resultLineItem.getAdjustments().equals(lineItem.getAdjustments())) {
             resultLineItem.setAdjustments(lineItem.getAdjustments());
             changeContent = "Adjustment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
-        } else if (null != resultLineItem.getComment() && !resultLineItem.getComment().equals(lineItem.getComment())) {
+        } else if (!resultLineItem.getComment().equals(lineItem.getComment())) {
             resultLineItem.setComment(lineItem.getComment());
             changeContent = changeContent + ", Comment change from " + String.valueOf(resultLineItem.getAdjustments().doubleValue()) + " to " + String.valueOf(lineItem.getAdjustments().doubleValue());
         }
@@ -72,7 +72,7 @@ public class LineItemController {
             }
         }
 
-        if(!changeContent.equals("")) {
+        if(!changeContent.equals(Constants.Common.EMPTY_STR)) {
             ChangeLog changeLog = new ChangeLog();
             changeLog.setContent(changeContent);
             changeLog.setCreateId(username);
@@ -95,14 +95,26 @@ public class LineItemController {
 		model.addAttribute("lineItem", lineItem);
         model.addAttribute("activePage", "lineItems");
         
-		return "/lineItems/detail";
+		return "lineItems/detail";
 	}
 
+    @GetMapping("/lineItems/page/keyword/{pageNo}")
+    public String fingPageinatedKeyword(@PathVariable(value = "pageNo") int pageNo, @RequestParam("keyword") String keyword , Model model) {
+        model.addAttribute("activePage", "lineItems");
+        return fingPageinated(1, "id", "asc", keyword, model);
+    }
+
     @GetMapping("/lineItems/page/{pageNo}")
-    public String fingPageinated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection, Model model) {
+    public String fingPageinated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField, @RequestParam("sortDirection") String sortDirection, @RequestParam("keyword") String keyword, Model model) {
         int pageSize = 50;
 
-        Page<LineItem> page = lineItemService.findPageinated(pageNo, pageSize, sortField, sortDirection);
+        Page<LineItem> page = null;
+        if(null != keyword) {
+            page = lineItemService.findPageinatedByCampaignName(keyword, pageNo, pageSize, sortField, sortDirection);
+        } else {
+            page = lineItemService.findPageinated(pageNo, pageSize, sortField, sortDirection);
+        }
+
         List<LineItem> lineItemList = page.getContent();
         
         model.addAttribute("currentPage", pageNo);

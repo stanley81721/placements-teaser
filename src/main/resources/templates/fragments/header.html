@@ -20,7 +20,7 @@
                 <a class="nav-link" th:href="@{'/campaigns/page/1?sortField=campaignName&sortDirection=asc'}">Campaign</a>
             </li>
             <li class="nav-item" th:class="${activePage == 'linItems'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/lineItems/page/1?sortField=id&sortDirection=asc}">Line Item</a>
+                <a class="nav-link" th:href="@{/lineItems/page/1?sortField=id&sortDirection=asc&keyword}">Line Item</a>
             </li>
             <li class="nav-item" th:class="${activePage == 'invoices'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/invoices/page/1?sortField=invoiceNumber&sortDirection=asc}">Invoice</a>

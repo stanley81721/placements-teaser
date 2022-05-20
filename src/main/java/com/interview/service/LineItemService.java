@@ -15,5 +15,7 @@ public interface LineItemService {
 	void deleteLineItemById(int id);
     Page<LineItem> findPageinated(int pageNo, int pageSize, String sortField, String sortDirection);
     Page<LineItem> findPageinatedByCampaignId(int campaign, int pageNo, int pageSize, String sortField, String sortDirection);
-    
+
+    Page<LineItem> findPageinatedByCampaignName(String campaignName, int pageNo, int pageSize, String sortField, String sortDirection);
+
 }

@@ -14,6 +14,7 @@ import com.interview.helper.InvoiceHelper;
 import com.interview.model.Campaign;
 import com.interview.model.Invoice;
 import com.interview.service.CampaignService;
+import com.interview.service.ChangeLogService;
 import com.interview.service.InvoiceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class InvoiceController {
 
     @Autowired
     private InvoiceService invoiceService;
+
+    @Autowired
+    private ChangeLogService changeLogService;
 
     @Autowired
     private InvoiceHelper invoiceHelper;

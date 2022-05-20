@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.interview.common.Constants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class LineItem {
     @Getter(AccessLevel.NONE)
     @Transient
     private BigDecimal billableAmount;
-    private String comment;
+    private String comment = Constants.Common.EMPTY_STR;
     @ManyToOne
     @JoinColumn(name="campaign_id", nullable=false)
     private Campaign campaign;

@@ -60,10 +60,16 @@ public class LineItemServiceImpl implements LineItemService {
 
     @Override
     public Page<LineItem> findPageinatedByCampaignId(int campaignId, int pageNo, int pageSize, String sortField, String sortDirection) {
-        System.out.println("findPageinated sortField = " + sortField +  " sortDirection = " + sortDirection);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return lineItemRepository.findPageinatedLineItemsByCampaignId(campaignId, pageable);
+    }
+
+    @Override
+    public Page<LineItem> findPageinatedByCampaignName(String campaignName, int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return lineItemRepository.findPageinatedLineItemsByOrderByIdAsc(campaignName, pageable);
     }
 
 }

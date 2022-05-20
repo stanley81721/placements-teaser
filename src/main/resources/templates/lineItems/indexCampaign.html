@@ -4,45 +4,48 @@
 <head>
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+	<script src="component/jquery-3.6.0.min.js" type="text/javascript"></script>
 </head>
 <body>
 	<div th:replace="~{fragments/header :: header}"></div>
 
 	<div class="container my-2">
-	<h1>Line Items</h1>
+	<h1 th:text="${campaign.campaignName}"></h1>
+	<h3>Line Items</h3>
 	
 		<table border="1" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=id&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=id&sortDirection=' + ${reverseSortDirection}}">
 							ID</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=name&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=name&sortDirection=' + ${reverseSortDirection}}">
 							Name</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=bookedAmount&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=bookedAmount&sortDirection=' + ${reverseSortDirection}}">
 							Booked Amount</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=actualAmount&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=actualAmount&sortDirection=' + ${reverseSortDirection}}">
 							Actual Amopunt</a>
 					</th>
                     <th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=adjustments&sortDirection=' + ${reverseSortDirection}}">
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=adjustments&sortDirection=' + ${reverseSortDirection}}">
 							Adjustments</a>
 					</th>
 					<th>
 						Billable Amount
 					</th>
 					<th>
-						Status
+						<a th:href="@{'/lineItems/page/campaign/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
+							Comment</a>
 					</th>
 					<th>
-						<a th:href="@{'/lineItems/page/' + ${currentPage} + '?campaignId=' + ${campaignId} + '&sortField=comment&sortDirection=' + ${reverseSortsortDirection}}">
-							Comment</a>
+						Status
 					</th>
 					<th> Actions </th>
 				</tr>
@@ -69,19 +72,27 @@
 				</div>
 				<div class = "col-sm-8">
 					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/lineItems/page/' + ${i}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+						<a th:if="${currentPage != i}" th:href="@{'/lineItems/page/campaign/' + ${i}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
 						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
 					</span>
 				</div>
 				<div class = "col-sm-1">
-					<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${currentPage + 1}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
+					<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/campaign/' + ${currentPage + 1}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
 					<span th:unless="${currentPage < totalPages}">Next</span>
 				</div>
 				
 				 <div class="col-sm-1">
-    				<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/' + ${totalPages}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
+    				<a th:if="${currentPage < totalPages}" th:href="@{'/lineItems/page/campaign/' + ${totalPages}+ '?campaignId=' + ${campaignId} + '&sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
 					<span th:unless="${currentPage < totalPages}">Last</span>
    				 </div>
+			</div>
+		</div>
+		<div>
+			<h3 th:text="'Sub Totals:' + ${subTotals}"></h3>
+
+			<div>
+				<input id="inputReviewed" name="inputReviewed" type="checkbox">
+				<label for="inputReviewed">Reviewed</label>
 			</div>
 		</div>
 	</div>
