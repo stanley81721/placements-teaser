@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StorageService {
     
-    private String bucketName = "placementteaserbucket";
+    private String bucketName = "placementteaser";
 
     @Autowired
     private AmazonS3 s3Client;

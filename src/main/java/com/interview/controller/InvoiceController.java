@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.interview.helper.InvoiceExcelExporter;
 import com.interview.helper.InvoiceHelper;
 import com.interview.model.Campaign;
+import com.interview.model.ChangeLog;
 import com.interview.model.Invoice;
 import com.interview.service.CampaignService;
 import com.interview.service.ChangeLogService;
@@ -19,6 +20,8 @@ import com.interview.service.InvoiceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,12 +60,27 @@ public class InvoiceController {
 
     @PostMapping(value = "/saveInvoice")
 	public String saveInvoice(@RequestParam(value = "campaigns" , required = false) Integer[] campaigns) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
         Invoice invoice = new Invoice();
         List<Integer> list = Arrays.asList(campaigns);
         List<Campaign> campaignList = campaignService.getCampaignsByCampaignIds(list);
         invoice.setInvoiceNumber(invoiceHelper.generateInvoiceNumber());
         invoice.setCampaigns(campaignList);
         invoiceService.save(invoice);
+
+        String changeContent = username + " Create invoice " + String.valueOf(invoice.getInvoiceNumber());
+        ChangeLog changeLog = new ChangeLog();
+        changeLog.setContent(changeContent);
+        changeLog.setCreateId(username);
+        changeLog.setCreateTimestamp(new java.sql.Timestamp(new Date().getTime()));
+        changeLogService.save(changeLog);
         
 		return "redirect:/invoices";
 	}
