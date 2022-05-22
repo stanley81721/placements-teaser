@@ -3,6 +3,8 @@ Placements.IO Interview Project
 
 [Demo](https://rocky-basin-57012.herokuapp.com/)
 
+**Caution** : As we are using an in-memory database(H2 Database), the data will be missed every 24 hours on Heroku.
+
 # Installation for Windows
 *Please install [JDK version 11.0.15](https://www.oracle.com/tw/java/technologies/javase/jdk11-archive-downloads.html) before you start the installation. Also set the environment variable for your system.*  
 *You may check this [LINK](https://www.ibm.com/docs/en/b2b-integrator/5.2?topic=installation-setting-java-variables-in-windows) to set the environment variable.*  
