@@ -31,6 +31,7 @@ public class StorageController {
 
         storageService.uploadFile(byteArrayOutputStream);
         model.addAttribute("invoice", invoice);
+        model.addAttribute("status", "success");
 
         return "invoices/detail";
     }
