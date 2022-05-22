@@ -54,7 +54,7 @@
         <div>
 			<h3 th:text="'Grand Totals:' + ${invoice.getGrandTotals}"></h3>
 		</div>
-        <a th:href = "@{'/invoices/page/1?sortField=invoiceNumber&sortDirection=asc'}"> Back to Invoice List</a>
+        <a th:href = "@{'/invoices/page/1?sortField=invoiceNumber&sortDirection=asc'}" class="btn btn-secondary"> Back to Invoice List</a>
     </div>
 
     <div th:replace="~{fragments/footer :: footer}"></div>

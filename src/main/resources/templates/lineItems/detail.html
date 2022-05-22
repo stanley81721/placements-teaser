@@ -52,13 +52,15 @@
             </table>
             <input id="inputReviewed" name="inputReviewed" type="checkbox">
             <label for="inputReviewed">Reviewed</label>
-				
-			<button type="button" onclick="javascript:validateForm();" class="btn btn-info col-2">Update Line Item</button>
+
+            <div>
+			    <button type="button" onclick="javascript:validateForm();" class="btn btn-info col-2">Update Line Item</button>
+            </div>
 		</form>
 		
 		<hr>
 		
-		<a th:href = "@{'/lineItems/page/campaign/1?campaignId=' + ${lineItem.campaign.campaignId} + '&sortField=id&sortDirection=asc'}"> Back to Line Item List</a>
+		<a th:href = "@{'/lineItems/page/campaign/1?campaignId=' + ${lineItem.campaign.campaignId} + '&sortField=id&sortDirection=asc'}" class="btn btn-secondary"> Back to Line Item List</a>
 	</div>
 
     <div th:replace="~{fragments/footer :: footer}"></div>
