@@ -32,7 +32,7 @@ public class StorageController {
         storageService.uploadFile(byteArrayOutputStream);
         model.addAttribute("invoice", invoice);
 
-        return "/invoices/detail";
+        return "invoices/detail";
     }
 
 }
