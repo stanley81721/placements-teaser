@@ -55,7 +55,7 @@ public class InvoiceController {
         model.addAttribute("activePage", "invoices");
         model.addAttribute("campaignList", campaignService.getAllCampaigns());
 
-        return "/invoices/addInvoice";
+        return "invoices/addInvoice";
     }
 
     @PostMapping(value = "/saveInvoice")
@@ -91,7 +91,7 @@ public class InvoiceController {
         model.addAttribute("invoice", invoice);
         model.addAttribute("activePage", "invoices");
 
-        return "/invoices/detail";
+        return "invoices/detail";
     }
 
     @GetMapping("/invoices/page/{pageNo}")
